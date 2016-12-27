@@ -1,0 +1,71 @@
+#
+# Input misc drivers configuration
+#
+menuconfig LPC5400X_SENSORHUB
+	bool "LPC Sensor Hub Miscellaneous devices"
+	help
+	  Say Y here, and a list of miscellaneous input drivers will be displayed.
+	  Everything that didn't fit into the other categories is here. This option
+	  doesn't affect the kernel.
+	  If unsure, say Y.
+
+if LPC5400X_SENSORHUB
+
+config LPC5400X_SENSORHUB_I2C
+	tristate "LPC5400X sensor hub"
+	depends on I2C && IIO
+	help
+          The LPC5400X sensor hub is to control the sensors in a power-saving mode
+          Say Y here to enable the feature.
+          
+config LPC5400X_SENSORHUB_FIRMWARE_UPDATE_I2C
+	tristate "LPC5400X sensor hub Firmware Update capability"
+	depends on LPC5400X_SENSORHUB
+	help
+          The LPC5400X sensor hub Firmware loader for LPC5400X sensor hub
+          Say Y here to enable the feature.
+          
+config LPC5400X_SENSORHUB_VOICE_TRIGGER
+	tristate "LPC5400X sensor hub with Voice Triggering"
+	depends on LPC5400X_SENSORHUB_I2C
+	help
+          The LPC5400X sensor hub with Voice Triggering
+          Say Y here to enable the feature.
+           
+config LPC5400X_SENSORHUB_IR_BLASTER
+	tristate "LPC5400X sensor hub with Infra Red Blaster"
+	depends on LPC5400X_SENSORHUB_I2C
+	help
+          The LPC5400X sensor hub with Infra Red Blaster
+          Say Y here to enable the feature.
+
+config LPC5400X_SENSORHUB_BREATH_LED
+	tristate "LPC5400X sensor hub with Breath Led"
+	depends on LPC5400X_SENSORHUB_I2C
+	help
+          The LPC5400X sensor hub with Breath Led
+          Say Y here to enable the feature.
+
+config LPC5400X_SENSORHUB_RAMDUMP
+	tristate "LPC5400X sensor hub with Ramdump"
+	depends on LPC5400X_SENSORHUB_I2C
+	help
+          The LPC5400X sensor hub with Ram dump 
+          Say Y here to enable the sensor hub RAM DUMP when abnormal           
+
+config LPC5400X_SENSORHUB_LOGGING_SERVICE
+	tristate "LPC5400X sensor hub with Logging Service"
+#	depends on LPC5400X_SENSORHUB_RAMDUMP
+	help
+          The LPC5400X sensor hub with Logging Service 
+          Say Y here to enable the sensor hub LOGGING SERVICE when abnormal           
+
+config LPC5400X_SENSORHUB_AUDIO_SENSE
+	tristate "LPC5400X sensor hub with AudioSense"
+	depends on LPC5400X_SENSORHUB_I2C
+	help
+          The LPC5400X sensor hub with AudioSense
+          Say Y here to enable the feature.
+
+endif
+
