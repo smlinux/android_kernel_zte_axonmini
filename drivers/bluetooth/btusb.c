@@ -36,7 +36,7 @@ static bool disable_scofix;
 static bool force_scofix;
 
 static int sco_conn;
-static int reset = 1;
+static bool reset = true;
 
 static struct usb_driver btusb_driver;
 
@@ -1334,7 +1334,7 @@ static int btusb_probe(struct usb_interface *intf,
 	struct usb_endpoint_descriptor *ep_desc;
 	struct btusb_data *data;
 	struct hci_dev *hdev;
-	int i, version, err;
+	int i, err;
 
 	BT_DBG("intf %p id %p", intf, id);
 
@@ -1364,16 +1364,10 @@ static int btusb_probe(struct usb_interface *intf,
 	if (id->driver_info & BTUSB_ATH3012) {
 		struct usb_device *udev = interface_to_usbdev(intf);
 
-		version = get_rome_version(udev);
-		BT_INFO("Rome Version: 0x%x",  version);
 		/* Old firmware would otherwise let ath3k driver load
 		 * patch and sysconfig files */
-		if (version)
-			rome_download(udev);
-		else if (le16_to_cpu(udev->descriptor.bcdDevice) <= 0x0001) {
-			BT_INFO("FW for ar3k is yet to be downloaded");
+		if (le16_to_cpu(udev->descriptor.bcdDevice) <= 0x0001)
 			return -ENODEV;
-		}
 	}
 	data = devm_kzalloc(&intf->dev, sizeof(*data), GFP_KERNEL);
 	if (!data)
